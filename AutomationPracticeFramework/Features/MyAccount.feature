@@ -9,3 +9,7 @@ Scenario: User can login to account
 	And user enters 'QAKurs' for password 
 	When user submits sign in
 	Then user is logged in to my account section
+
+Scenario: User can create an account
+	Given User opens sign in page
+	And user enters 'new-account+12345@test.com' for email address
