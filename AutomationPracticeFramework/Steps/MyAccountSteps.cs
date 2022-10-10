@@ -18,18 +18,12 @@ namespace AutomationPracticeFramework.Steps
             ut.ClickOnElement(hp.signIn);
         }
         
-        [Given(@"user enters '(.*)' for username")]
-        public void GivenUserEntersForUsername(string email)
+        [Given(@"user enters credentials")]
+        public void GivenUserEntersCredentials()
         {
             AuthenticationPage ap = new AuthenticationPage(Driver);
-            ut.EnterTextInElement(ap.email, email);
-        }
-        
-        [Given(@"user enters '(.*)' for password")]
-        public void GivenUserEntersForPassword(string password)
-        {
-            AuthenticationPage ap = new AuthenticationPage(Driver);
-            ut.EnterTextInElement(ap.password, password);
+            ut.EnterTextInElement(ap.email, TestConstants.Username);
+            ut.EnterTextInElement(ap.password, TestConstants.Password);
         }
         
         [When(@"user submits sign in")]
@@ -39,11 +33,49 @@ namespace AutomationPracticeFramework.Steps
             ut.ClickOnElement(ap.signInButton);
         }
         
-        [Then(@"user is logged in to my account section")]
+        [StepDefinition(@"user is logged in to my account section")]
         public void ThenUserIsLoggedInToMyAccountSection()
         {
             MyAccountPage map = new MyAccountPage(Driver);
             Assert.That(ut.ReturnTextFromElement(map.myAccountValidator), Is.EqualTo("MY ACCOUNT"), "Page 'My account' was not found");
         }
+
+        [Given(@"user enters email in create account section and submits")]
+        public void GivenUserEntersEmailInCreateAccountSection()
+        {
+            AuthenticationPage ap = new AuthenticationPage(Driver);
+            ut.EnterTextInElement(ap.createEmail, ut.GenerateRandomEmail());
+            ut.ClickOnElement(ap.submitCreate);
+        }
+
+        [Given(@"user enters all required fields for account creation")]
+        public void GivenUserEntersAllRequiredFieldsForAccountCreation()
+        {
+            CreateAccountPage cap = new CreateAccountPage(Driver);
+            ut.EnterTextInElement(cap.customerFirstName, TestConstants.RegisterFirstName);
+            ut.EnterTextInElement(cap.customerLastName, TestConstants.RegisterLastName);
+            ut.EnterTextInElement(cap.customerPassword, TestConstants.RegisterPassword);
+            ut.EnterTextInElement(cap.customerAddress, TestConstants.RegisterAddress);
+            ut.EnterTextInElement(cap.customerCity, TestConstants.RegisterCity);
+            ut.DropdownSelect(cap.customerState, TestConstants.RegisterState);
+            ut.EnterTextInElement(cap.customerZip, TestConstants.RegisterZip);
+            ut.EnterTextInElement(cap.customerMobile, TestConstants.RegisterMobile);
+        }
+
+        [When(@"user submits registration")]
+        public void WhenUserSubmitsRegistration()
+        {
+            CreateAccountPage cap = new CreateAccountPage(Driver);
+            ut.ClickOnElement(cap.submitAccount);
+        }
+
+        [Given(@"user is logged in")]
+        public void GivenUserIsLoggedIn()
+        {
+            GivenUserOpensSignInPage();
+            GivenUserEntersCredentials();
+            WhenUserSubmitsSignIn();
+        }
+
     }
 }
