@@ -22,5 +22,12 @@ namespace AutomationPracticeFramework.Pages
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementExists(homepage));
         }
+
+        public IList<IWebElement> ReturnCategoryList(String categoryName)
+        {
+            By categoryOption = By.CssSelector(".sf-menu [title='" + categoryName + "']");
+            IList<IWebElement> category = driver.FindElements(categoryOption);
+            return category;
+        }
     }
 }
