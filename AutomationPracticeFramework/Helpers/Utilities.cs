@@ -27,6 +27,12 @@ namespace AutomationPracticeFramework.Helpers
             wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(locator)).Click();
         }
 
+        public void ClearInputField(By locator)
+        {
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(locator)).Clear();
+        }
+
         public void DropdownSelect(By select, string option)
         {
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
@@ -46,6 +52,13 @@ namespace AutomationPracticeFramework.Helpers
         {
             return driver.FindElement(locator).Text; //other option
             //return driver.FindElement(locator).GetAttribute("textContent");
+        }
+
+        public IWebElement TextPresentInElement(string text)
+        {
+            By textElement = By.XPath("//*[contains(text(), '" + text + "')]");
+            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(15));
+            return wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(textElement));
         }
     }
 }
