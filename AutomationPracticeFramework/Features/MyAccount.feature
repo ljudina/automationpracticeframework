@@ -16,7 +16,7 @@ Scenario: User can create an account
 	And user enters email in create account section and submits
 	And user enters all required fields for account creation
 	When user submits registration
-	And user is logged in to my account section
+	And users full name is displayed
 
-Scenaro: User can open wishlist
+Scenario: User can open wishlist
 	Given user is logged in

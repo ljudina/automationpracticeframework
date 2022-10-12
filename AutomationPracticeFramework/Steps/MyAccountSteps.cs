@@ -12,6 +12,13 @@ namespace AutomationPracticeFramework.Steps
         HomePage hp = new HomePage(Driver);        
         Utilities ut = new Utilities(Driver);
 
+        private readonly PersonData personData;
+
+        public MyAccountSteps(PersonData personData)
+        {
+            this.personData = personData;
+        }
+
         [Given(@"User opens sign in page")]
         public void GivenUserOpensSignInPage()
         {
@@ -44,7 +51,8 @@ namespace AutomationPracticeFramework.Steps
         public void GivenUserEntersEmailInCreateAccountSection()
         {
             AuthenticationPage ap = new AuthenticationPage(Driver);
-            ut.EnterTextInElement(ap.createEmail, ut.GenerateRandomEmail());
+            personData.GeneratedEmail = ut.GenerateRandomEmail();
+            ut.EnterTextInElement(ap.createEmail, personData.GeneratedEmail);
             ut.ClickOnElement(ap.submitCreate);
         }
 
@@ -52,6 +60,7 @@ namespace AutomationPracticeFramework.Steps
         public void GivenUserEntersAllRequiredFieldsForAccountCreation()
         {
             CreateAccountPage cap = new CreateAccountPage(Driver);
+            personData.FullName = TestConstants.RegisterFirstName + " " + TestConstants.RegisterLastName;
             ut.EnterTextInElement(cap.customerFirstName, TestConstants.RegisterFirstName);
             ut.EnterTextInElement(cap.customerLastName, TestConstants.RegisterLastName);
             ut.EnterTextInElement(cap.customerPassword, TestConstants.RegisterPassword);
@@ -76,6 +85,13 @@ namespace AutomationPracticeFramework.Steps
             GivenUserEntersCredentials();
             WhenUserSubmitsSignIn();
         }
+
+        [When(@"users full name is displayed")]
+        public void WhenUsersFullNameIsDisplayed()
+        {
+            Assert.True(ut.TextPresentInElement(personData.FullName).Displayed, "User's full name is not displayed");
+        }
+
 
     }
 }
