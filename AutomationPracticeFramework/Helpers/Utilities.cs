@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AutomationPracticeFramework.Helpers
@@ -14,6 +15,13 @@ namespace AutomationPracticeFramework.Helpers
         public Utilities(IWebDriver driver)
         {
             this.driver = driver;
+        }
+
+        public string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            return new string(System.Linq.Enumerable.Repeat(chars, length)
+                .Select(s => s[RandomName.Next(s.Length)]).ToArray());
         }
 
         public string GenerateRandomEmail()
