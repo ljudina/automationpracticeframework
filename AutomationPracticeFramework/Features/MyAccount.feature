@@ -20,3 +20,7 @@ Scenario: User can create an account
 
 Scenario: User can open wishlist
 	Given user is logged in
+	And user goes to My Wishlist page
+	And user enters whishlist name
+	When user submits whishlist name
+	Then whishlist name is displayed

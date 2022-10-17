@@ -12,6 +12,7 @@ namespace AutomationPracticeFramework.Pages
 
         public By myAccountPage = By.Id("my-account");
         public By myAccountValidator = By.CssSelector("h1.page-heading");
+        public By wishlistPage = By.ClassName("lnk_wishlist");
 
         public MyAccountPage(IWebDriver driver)
         {

@@ -13,10 +13,12 @@ namespace AutomationPracticeFramework.Steps
         Utilities ut = new Utilities(Driver);
 
         private readonly PersonData personData;
+        private readonly WishlistData wishlistData;
 
-        public MyAccountSteps(PersonData personData)
+        public MyAccountSteps(PersonData personData, WishlistData wishlistData)
         {
             this.personData = personData;
+            this.wishlistData = wishlistData;
         }
 
         [Given(@"User opens sign in page")]
@@ -25,7 +27,7 @@ namespace AutomationPracticeFramework.Steps
             ut.ClickOnElement(hp.signIn);
         }
         
-        [Given(@"user enters credentials")]
+        [StepDefinition(@"user enters credentials")]
         public void GivenUserEntersCredentials()
         {
             AuthenticationPage ap = new AuthenticationPage(Driver);
@@ -33,7 +35,7 @@ namespace AutomationPracticeFramework.Steps
             ut.EnterTextInElement(ap.password, TestConstants.Password);
         }
         
-        [When(@"user submits sign in")]
+        [StepDefinition(@"user submits sign in")]
         public void WhenUserSubmitsSignIn()
         {
             AuthenticationPage ap = new AuthenticationPage(Driver);
@@ -92,6 +94,33 @@ namespace AutomationPracticeFramework.Steps
             Assert.True(ut.TextPresentInElement(personData.FullName).Displayed, "User's full name is not displayed");
         }
 
+        [Given(@"user goes to My Wishlist page")]
+        public void GivenUserGoesToMyWishlistPage()
+        {
+            MyAccountPage map = new MyAccountPage(Driver);
+            ut.ClickOnElement(map.wishlistPage);
+        }
+
+        [Given(@"user enters whishlist name")]
+        public void WhenUserEntersWhishlistName()
+        {
+            WishlistPage wp = new WishlistPage(Driver);
+            wishlistData.Name = ut.GenerateRandomString(8);
+            ut.EnterTextInElement(wp.wishlistInput, wishlistData.Name);
+        }
+
+        [When(@"user submits whishlist name")]
+        public void WhenUserSubmitsWhishlistName()
+        {
+            WishlistPage wp = new WishlistPage(Driver);
+            ut.ClickOnElement(wp.wishlistSubmit);
+        }
+
+        [Then(@"whishlist name is displayed")]
+        public void ThenWhishlistNameIsDisplayed()
+        {
+            Assert.True(ut.TextPresentInElement(wishlistData.Name).Displayed, "Wishlist name is not displayed");
+        }
 
     }
 }
