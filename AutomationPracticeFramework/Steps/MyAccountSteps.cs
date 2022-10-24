@@ -122,5 +122,37 @@ namespace AutomationPracticeFramework.Steps
             Assert.True(ut.TextPresentInElement(wishlistData.Name).Displayed, "Wishlist name is not displayed");
         }
 
+        [Given(@"user goes to My personal information page")]
+        public void GivenUserGoesToMyPersonalInformationPage()
+        {
+            MyAccountPage map = new MyAccountPage(Driver);
+            ut.ClickOnElement(map.personalInformationPage);
+        }
+
+        [Given(@"user changes last name")]
+        public void GivenUserChangesLastName()
+        {
+            PersonalInformationPage pip = new PersonalInformationPage(Driver);
+            ut.ClearInputField(pip.customerLastName);
+            personData.LastName = ut.GenerateRandomString(8);
+            ut.EnterTextInElement(pip.customerLastName, personData.LastName);
+            ut.EnterTextInElement(pip.customerOldPassword, TestConstants.Password);
+        }
+
+        [When(@"user submits personal information name")]
+        public void WhenUserSubmitsPersonalInformationName()
+        {
+            PersonalInformationPage pip = new PersonalInformationPage(Driver);
+            ut.ClickOnElement(pip.saveButton);
+        }
+
+        [Then(@"new last name is shown")]
+        public void ThenNewLastNameIsShown()
+        {
+            PersonalInformationPage pip = new PersonalInformationPage(Driver);
+            Assert.That(ut.ReturnTextFromElement(pip.accountName), Does.Contain(personData.LastName), "Changed last name is not displayed");
+        }
+
+
     }
 }

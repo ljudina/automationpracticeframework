@@ -24,3 +24,11 @@ Scenario: User can open wishlist
 	And user enters whishlist name
 	When user submits whishlist name
 	Then whishlist name is displayed
+
+Scenario: User can change last name
+	Given user is logged in
+	And user goes to My personal information page
+	And user changes last name
+	When user submits personal information name
+	Then new last name is shown
+	
