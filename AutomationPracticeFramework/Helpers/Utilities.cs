@@ -19,7 +19,7 @@ namespace AutomationPracticeFramework.Helpers
 
         public string GenerateRandomString(int length)
         {
-            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
             return new string(System.Linq.Enumerable.Repeat(chars, length)
                 .Select(s => s[RandomName.Next(s.Length)]).ToArray());
         }
